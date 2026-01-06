@@ -15,6 +15,7 @@ import lombok.Setter;
 public class User {
     @Id // this will set the id as primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) // because the primary id was auto_incremented in the database (best practice)
+    @Column(name = "id")
     private Long id;
 
     @Column(nullable = false, name = "name") // this will bind this field to the column in database with the name of name (best practice)
