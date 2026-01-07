@@ -1,11 +1,12 @@
 package com.example.store.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@ToString
 @Setter
 @Getter
 @AllArgsConstructor
@@ -25,4 +26,17 @@ public class User {
     @Column(nullable = false, name = "password")
     private String password;
 
+    @OneToMany(mappedBy = "user") // one user can have many addresses // mappedBy is used to specify the field in the Address entity that owns the relationship
+    private List<Address> addresses = new ArrayList<>(); // initialize the list to avoid null pointer exception but it works only with the default constructor for other constructors you have to initialize it manually
+
+    // helper method to add address to user in main application
+    public void addAddress(Address address) {
+        this.addresses.add(address);
+        address.setUser(this); // set the user in the address to this user
+    }
+
+    public void removeAddress(Address address) {
+        this.addresses.remove(address);
+        address.setUser(null); // remove the user from the address
+    }
 }

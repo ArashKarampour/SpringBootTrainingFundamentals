@@ -1,11 +1,9 @@
 package com.example.store.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+@ToString
 @Entity
 @Getter
 @Setter
@@ -27,4 +25,9 @@ public class Address {
 
     @Column(nullable = false, name = "zip")
     private String zip;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id") // this is for the foreign key column in addresses table that references users table(users(id))
+    @ToString.Exclude             // to avoid circular reference in toString method
+    private User user;            // Address side(many side) is the owner of the relationship because it contains the foreign key for the user(one side).
 }
