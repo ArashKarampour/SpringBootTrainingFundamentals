@@ -1,13 +1,12 @@
 package com.example.store.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
+@Builder    // using builder pattern for creating Profile objects
+@ToString
 @Entity
 @Getter
 @Setter
@@ -32,4 +31,10 @@ public class Profile {
 
     @Column(name = "loyalty_points")
     private Integer loyaltyPoints;
+
+    @OneToOne
+    @JoinColumn(name = "id") // id in profiles table is both primary key and foreign key referencing users(id)
+    @MapsId // to indicate that the primary key of this entity is also a foreign key to the User entity
+    @ToString.Exclude
+    private User user;
 }

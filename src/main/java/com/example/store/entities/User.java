@@ -67,4 +67,7 @@ public class User {
         this.tags.remove(tag);
         tag.getUsers().remove(this); // maintain the bidirectional relationship
     }
+
+    @OneToOne(mappedBy = "user") // one-to-one relationship with Profile entity // mappedBy is used to specify the field in the Profile entity that owns the relationship
+    private Profile profile;
 }
