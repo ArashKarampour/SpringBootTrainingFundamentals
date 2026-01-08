@@ -51,7 +51,7 @@ public class User {
     @ManyToMany // in many-to-many relationship each side could be the owner of the relationship but we have to specify one side as the owner (here we chose User as the owner)
     @JoinTable( // specify the join table for the many-to-many relationship (in the owner side)
         name = "user_tags", // name of the join table
-        joinColumns = @JoinColumn(name = "user_id"), // foreign key column in the join table that references the user
+        joinColumns = @JoinColumn(name = "user_id"), // foreign key column in the join table that references the user (note that joinColumns is for the owner side's forign key not the other one so it shoud be user_id)
         inverseJoinColumns = @JoinColumn(name = "tag_id") // foreign key column in the join table that references the tag
     )
     private Set<Tag> tags = new HashSet<>();
@@ -70,4 +70,8 @@ public class User {
 
     @OneToOne(mappedBy = "user") // one-to-one relationship with Profile entity // mappedBy is used to specify the field in the Profile entity that owns the relationship
     private Profile profile;
+
+    @ManyToMany
+    @JoinTable(name = "wishlist", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private Set<Product> wishlistProducts = new HashSet<>();
 }
