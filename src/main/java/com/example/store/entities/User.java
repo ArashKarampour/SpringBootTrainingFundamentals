@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @ToString
 @Setter
@@ -26,6 +28,12 @@ public class User {
     @Column(nullable = false, name = "password")
     private String password;
 
+    public User(String email, String name, String password) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
+    }
+
     @OneToMany(mappedBy = "user") // one user can have many addresses // mappedBy is used to specify the field in the Address entity that owns the relationship
     private List<Address> addresses = new ArrayList<>(); // initialize the list to avoid null pointer exception but it works only with the default constructor for other constructors you have to initialize it manually
 
@@ -38,5 +46,25 @@ public class User {
     public void removeAddress(Address address) {
         this.addresses.remove(address);
         address.setUser(null); // remove the user from the address
+    }
+
+    @ManyToMany // in many-to-many relationship each side could be the owner of the relationship but we have to specify one side as the owner (here we chose User as the owner)
+    @JoinTable( // specify the join table for the many-to-many relationship (in the owner side)
+        name = "user_tags", // name of the join table
+        joinColumns = @JoinColumn(name = "user_id"), // foreign key column in the join table that references the user
+        inverseJoinColumns = @JoinColumn(name = "tag_id") // foreign key column in the join table that references the tag
+    )
+    private Set<Tag> tags = new HashSet<>();
+
+
+    public void addTag(String tagName) {
+        Tag tag = new Tag(tagName);
+        this.tags.add(tag);
+        tag.getUsers().add(this); // maintain the bidirectional relationship
+    }
+
+    public void removeTag(Tag tag) {
+        this.tags.remove(tag);
+        tag.getUsers().remove(this); // maintain the bidirectional relationship
     }
 }
