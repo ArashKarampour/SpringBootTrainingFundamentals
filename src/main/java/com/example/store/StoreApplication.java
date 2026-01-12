@@ -4,6 +4,7 @@ import com.example.store.entities.Address;
 import com.example.store.entities.Profile;
 import com.example.store.entities.User;
 import com.example.store.repositories.UserRepository;
+import com.example.store.services.UserService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -34,7 +35,10 @@ public class StoreApplication {
 //		userRepository.save(user); // save user to database
 //		userRepository.deleteById(1L); // delete user from database by id
 		// fetch user from database
-        userRepository.findById(2L).ifPresent(fetchedUser -> System.out.println(fetchedUser.getName()));
+//        userRepository.findById(2L).ifPresent(fetchedUser -> System.out.println(fetchedUser.getName()));
+
+		var userService = context.getBean(UserService.class);
+		userService.showEntityStates();
         //		SpringApplication.run(StoreApplication.class, args);
 //		var orderService = context.getBean(OrderService.class);
 //		orderService.placeOrder();

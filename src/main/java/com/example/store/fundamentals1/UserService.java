@@ -2,7 +2,7 @@ package com.example.store.fundamentals1;
 
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("fundumentals1UserService")
 public class UserService {
     private UserRepository userRepository;
     private NotificationService notificationService;
