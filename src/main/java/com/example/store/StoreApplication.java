@@ -38,7 +38,8 @@ public class StoreApplication {
 //        userRepository.findById(2L).ifPresent(fetchedUser -> System.out.println(fetchedUser.getName()));
 
 		var userService = context.getBean(UserService.class);
-		userService.showEntityStates();
+//		userService.showEntityStates();
+		userService.showRelatedEntities();
         //		SpringApplication.run(StoreApplication.class, args);
 //		var orderService = context.getBean(OrderService.class);
 //		orderService.placeOrder();

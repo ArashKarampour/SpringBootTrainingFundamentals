@@ -32,7 +32,7 @@ public class Profile {
     @Column(name = "loyalty_points")
     private Integer loyaltyPoints;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY) // lazy loading to avoid loading user data unless it is accessed. for one-to-one only the owner side should specify the fetch type for the other side you can delete it and the Profile object will not be shown for the user.
     @JoinColumn(name = "id") // id in profiles table is both primary key and foreign key referencing users(id)
     @MapsId // to indicate that the primary key of this entity is also a foreign key to the User entity
     @ToString.Exclude

@@ -1,6 +1,7 @@
 package com.example.store.services;
 
 import com.example.store.entities.User;
+import com.example.store.repositories.ProfileRepository;
 import com.example.store.repositories.UserRepository;
 import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
     private final UserRepository userRepository;
     private final EntityManager entityManager; // to manage(check) entity states
+    private final ProfileRepository profileRepository;
 
 //    public UserService(UserRepository userRepository) {
 //        this.userRepository = userRepository;
@@ -32,5 +34,11 @@ public class UserService {
             System.out.println("User is in managed state (Persistent state)");
         else
             System.out.println("User is in Transient/Detached state");
+    }
+
+    @Transactional // to keep the session(persistent context/session) open while accessing related entities (to avoid LazyInitializationException)
+    public void showRelatedEntities(){
+        var profile = profileRepository.findById(2L).orElseThrow();
+        System.out.println(profile.getUser().getName()); // accessing the user of the profile (will work because we are in a transaction with the Transactional annotation)
     }
 }
