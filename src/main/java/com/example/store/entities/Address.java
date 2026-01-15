@@ -26,7 +26,7 @@ public class Address {
     @Column(nullable = false, name = "zip")
     private String zip;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) // lazy loading to avoid loading user data(and profile in it) unless it is accessed
     @JoinColumn(name = "user_id") // this is for the foreign key column in addresses table that references users table(users(id))
     @ToString.Exclude             // to avoid circular reference in toString method
     private User user;            // Address side(many side) is the owner of the relationship because it contains the foreign key for the user(one side).

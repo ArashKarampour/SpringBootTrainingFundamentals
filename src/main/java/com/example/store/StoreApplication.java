@@ -39,7 +39,8 @@ public class StoreApplication {
 
 		var userService = context.getBean(UserService.class);
 //		userService.showEntityStates();
-		userService.showRelatedEntities();
+//		userService.showRelatedEntities();
+		userService.fetchAddresses(); // fetch address to see the effect of fetch type (eager or lazy) (see the sql queries in the console)
         //		SpringApplication.run(StoreApplication.class, args);
 //		var orderService = context.getBean(OrderService.class);
 //		orderService.placeOrder();

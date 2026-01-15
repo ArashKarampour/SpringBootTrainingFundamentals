@@ -1,6 +1,7 @@
 package com.example.store.services;
 
 import com.example.store.entities.User;
+import com.example.store.repositories.AddressRepository;
 import com.example.store.repositories.ProfileRepository;
 import com.example.store.repositories.UserRepository;
 import jakarta.persistence.EntityManager;
@@ -14,6 +15,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final EntityManager entityManager; // to manage(check) entity states
     private final ProfileRepository profileRepository;
+    private final AddressRepository addressRepository;
 
 //    public UserService(UserRepository userRepository) {
 //        this.userRepository = userRepository;
@@ -40,5 +42,9 @@ public class UserService {
     public void showRelatedEntities(){
         var profile = profileRepository.findById(2L).orElseThrow();
         System.out.println(profile.getUser().getName()); // accessing the user of the profile (will work because we are in a transaction with the Transactional annotation)
+    }
+
+    public void fetchAddresses(){
+        var address = addressRepository.findById(1L).orElseThrow();
     }
 }
