@@ -34,18 +34,18 @@ public class User {
         this.password = password;
     }
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST) // one user can have many addresses // mappedBy is used to specify the field in the Address entity that owns the relationship // cascade is used to specify that when we persist a user, we also want to persist its addresses automatically
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true) // one user can have many addresses // mappedBy is used to specify the field in the Address entity that owns the relationship // cascade is used to specify that when we persist or delete a user, we also want to persist or delete its addresses automatically // orphanRemoval is used to specify that when we remove an address from the user's collection, we also want to delete it from the database
     private List<Address> addresses = new ArrayList<>(); // initialize the list to avoid null pointer exception but it works only with the default constructor for other constructors you have to initialize it manually
 
     // helper method to add address to user in main application
     public void addAddress(Address address) {
         this.addresses.add(address);
-        address.setUser(this); // set the user in the address to this user
+        address.setUser(this); // set the user in the address to this user // // this is important to keep bidirectional relationships in sync
     }
 
     public void removeAddress(Address address) {
         this.addresses.remove(address);
-        address.setUser(null); // remove the user from the address
+        address.setUser(null); // remove the user from the address // this is important to keep bidirectional relationships in sync
     }
 
     @ManyToMany // in many-to-many relationship each side could be the owner of the relationship but we have to specify one side as the owner (here we chose User as the owner)
@@ -68,7 +68,7 @@ public class User {
         tag.getUsers().remove(this); // maintain the bidirectional relationship
     }
 
-    @OneToOne(mappedBy = "user") // one-to-one relationship with Profile entity // mappedBy is used to specify the field in the Profile entity that owns the relationship
+    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE) // one-to-one relationship with Profile entity // mappedBy is used to specify the field in the Profile entity that owns the relationship // cascade is used to specify that when we delete a user, we also want to delete its profile automatically
     private Profile profile;
 
     @ManyToMany
