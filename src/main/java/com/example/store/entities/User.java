@@ -34,7 +34,7 @@ public class User {
         this.password = password;
     }
 
-    @OneToMany(mappedBy = "user") // one user can have many addresses // mappedBy is used to specify the field in the Address entity that owns the relationship
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST) // one user can have many addresses // mappedBy is used to specify the field in the Address entity that owns the relationship // cascade is used to specify that when we persist a user, we also want to persist its addresses automatically
     private List<Address> addresses = new ArrayList<>(); // initialize the list to avoid null pointer exception but it works only with the default constructor for other constructors you have to initialize it manually
 
     // helper method to add address to user in main application

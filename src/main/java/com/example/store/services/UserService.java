@@ -1,5 +1,6 @@
 package com.example.store.services;
 
+import com.example.store.entities.Address;
 import com.example.store.entities.User;
 import com.example.store.repositories.AddressRepository;
 import com.example.store.repositories.ProfileRepository;
@@ -46,5 +47,14 @@ public class UserService {
 
     public void fetchAddresses(){
         var address = addressRepository.findById(1L).orElseThrow();
+    }
+
+    public void persistRelated(){
+        var user = new User("name", "email", "password");
+        var address = new Address( "city", "street", "zip");
+        user.addAddress(address);
+
+        userRepository.save(user); // because of CascadeType.PERSIST in User->Address relationship, address will be saved automatically
+//        addressRepository.save(address); // this line is not necessary because of CascadeType.PERSIST in User class
     }
 }

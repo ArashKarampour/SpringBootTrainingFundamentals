@@ -11,6 +11,11 @@ import lombok.*;
 @NoArgsConstructor
 @Table(name = "addresses")
 public class Address {
+    public Address(String city, String street, String zip) {
+        this.city = city;
+        this.street = street;
+        this.zip = zip;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
