@@ -1,4 +1,4 @@
-create table usres
+create table users
 (
     id       bigint auto_increment
         primary key,
@@ -16,6 +16,6 @@ create table addresses
     zip     varchar(255) not null,
     user_id bigint       not null,
     constraint addresses_usres_id_fk
-        foreign key (user_id) references usres (id)
+        foreign key (user_id) references users (id)
 );
 

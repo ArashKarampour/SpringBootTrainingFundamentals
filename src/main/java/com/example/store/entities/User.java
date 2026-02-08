@@ -74,4 +74,8 @@ public class User {
     @ManyToMany
     @JoinTable(name = "wishlist", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
     private Set<Product> wishlistProducts = new HashSet<>();
+
+    public void addWishlistProduct(Product product) {
+        this.wishlistProducts.add(product);
+    }
 }
