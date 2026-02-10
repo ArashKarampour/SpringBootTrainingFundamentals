@@ -104,4 +104,9 @@ public class UserService {
         productRepository.deleteById(2L);
 
     }
+
+    @Transactional // Transactional is required for modifying queries (update or delete) to keep the session open while executing the query and to manage the transaction properly (commit or rollback)
+    public void updateProductPriceByCategory(){
+        productRepository.updatePriceByCategory(BigDecimal.valueOf(30.0), (byte) 3);
+    }
 }
