@@ -130,4 +130,10 @@ public class UserService {
             u.getAddresses().forEach(System.out::println); // this will cause n+1 problem because for each user we are fetching its addresses in a separate query(n queries for n users's addresses) (because of lazy loading) but we can solve this problem by using EntityGraph in the repository method to fetch addresses eagerly for that specific query(fetch all addresses and users in one query) (see UserRepository findAllUsersWithAddresse method)
         });
     }
+
+    @Transactional // we need transactional annotation here to keep the session open while accessing the products to manage the transaction properly while executing the stored procedure
+    public void fetchProductsByProcedure(){
+        var products = productRepository.findProductsByProcedure(BigDecimal.valueOf(20.0), BigDecimal.valueOf(30.0));
+        products.forEach(System.out::println);
+    }
 }

@@ -6,6 +6,7 @@ import com.example.store.entities.Category;
 import com.example.store.entities.Product;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
@@ -82,5 +83,9 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
     // we could also use projection with @Query and class but we need to use the constructor expression in JPQL(with full name from the top level package) to specify how to map the selected fields to the constructor of the projection class (e.g. new com.example.store.dtos.ProductSummaryDTOClass(p.id, p.name)) and we have to select individually the fields in the query. else all the fields will be loaded
     @Query("select new com.example.store.dtos.ProductSummaryDTOClass(p.id, p.name) from Product p where p.category = :category")
     List<ProductSummaryDTOClass> findByCategoryJPQL(@Param("category") Category category);
+
+    // Using Stored Procedures (if supported by the database) for complex operations that cannot be easily expressed in JPQL or native SQL:
+    @Procedure("findProductsByPrice") // this is the name of the stored procedure in the database
+    List<Product> findProductsByProcedure(BigDecimal min, BigDecimal max);
 
 }
