@@ -2,7 +2,6 @@ package com.example.store.services;
 
 import com.example.store.entities.Address;
 import com.example.store.entities.Category;
-import com.example.store.entities.Product;
 import com.example.store.entities.User;
 import com.example.store.repositories.*;
 import jakarta.persistence.EntityManager;
@@ -108,5 +107,12 @@ public class UserService {
     @Transactional // Transactional is required for modifying queries (update or delete) to keep the session open while executing the query and to manage the transaction properly (commit or rollback)
     public void updateProductPriceByCategory(){
         productRepository.updatePriceByCategory(BigDecimal.valueOf(30.0), (byte) 3);
+    }
+
+//    @Transactional
+    public void fetchProducts(){
+//        var category = categoryRepository.findById(Byte.valueOf("3")).orElseThrow();
+        var products = productRepository.findByCategoryJPQL(new Category((byte)3)); // we are using the Category with id constructor to just have the id before saving the category to the database or not to retrieve the category from the database to reduce queries shown by hibernate in the console.
+        products.forEach(System.out::println);
     }
 }
