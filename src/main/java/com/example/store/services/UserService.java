@@ -115,4 +115,10 @@ public class UserService {
         var products = productRepository.findByCategoryJPQL(new Category((byte)3)); // we are using the Category with id constructor to just have the id before saving the category to the database or not to retrieve the category from the database to reduce queries shown by hibernate in the console.
         products.forEach(System.out::println);
     }
+
+    @Transactional
+    public void fetchUser(String email){
+        var user = userRepository.findByEmail(email).orElseThrow();
+        System.out.println(user);
+    }
 }

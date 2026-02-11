@@ -1,14 +1,16 @@
 package com.example.store.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@ToString
 @Setter
 @Getter
 @AllArgsConstructor
@@ -77,5 +79,13 @@ public class User {
 
     public void addWishlistProduct(Product product) {
         this.wishlistProducts.add(product);
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+                "id = " + id + ", " +
+                "name = " + name + ", " +
+                "email = " + email + ")";
     }
 }

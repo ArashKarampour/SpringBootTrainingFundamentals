@@ -44,7 +44,8 @@ public class StoreApplication {
 //		userService.persistRelated();
 //		userService.deleteRelated();
 //		userService.manageProducts();
-		userService.fetchProducts();
+//		userService.fetchProducts();
+		userService.fetchUser("user1.test@email.com");
         //		SpringApplication.run(StoreApplication.class, args);
 //		var orderService = context.getBean(OrderService.class);
 //		orderService.placeOrder();
