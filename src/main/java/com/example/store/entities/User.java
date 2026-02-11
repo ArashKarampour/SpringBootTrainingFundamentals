@@ -70,8 +70,8 @@ public class User {
         tag.getUsers().remove(this); // maintain the bidirectional relationship
     }
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE) // one-to-one relationship with Profile entity // mappedBy is used to specify the field in the Profile entity that owns the relationship // cascade is used to specify that when we delete a user, we also want to delete its profile automatically
-    private Profile profile;
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE) // one-to-one relationship with Profile entity // mappedBy is used to specify the field in the Profile entity that owns the relationship // cascade is used to specify that when we delete a user, we also want to delete its profile automatically
+//    private Profile profile;
 
     @ManyToMany
     @JoinTable(name = "wishlist", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))

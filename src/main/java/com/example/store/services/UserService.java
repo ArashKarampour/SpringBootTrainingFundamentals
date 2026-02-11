@@ -121,4 +121,13 @@ public class UserService {
         var user = userRepository.findByEmail(email).orElseThrow();
         System.out.println(user);
     }
+
+    public void fetchAllUsers(){
+        var users = userRepository.findAllUsersWithAddresses();
+        users.forEach(u -> {
+            System.out.println(u);
+            System.out.println("Addresses:");
+            u.getAddresses().forEach(System.out::println); // this will cause n+1 problem because for each user we are fetching its addresses in a separate query(n queries for n users's addresses) (because of lazy loading) but we can solve this problem by using EntityGraph in the repository method to fetch addresses eagerly for that specific query(fetch all addresses and users in one query) (see UserRepository findAllUsersWithAddresse method)
+        });
+    }
 }
