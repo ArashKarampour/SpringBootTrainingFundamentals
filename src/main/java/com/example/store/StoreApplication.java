@@ -47,7 +47,9 @@ public class StoreApplication {
 //		userService.fetchProducts();
 //		userService.fetchUser("user1.test@email.com");
 //		userService.fetchAllUsers();
-		userService.fetchProductsByProcedure();
+//		userService.fetchProductsByProcedure();
+//		userService.fetchProfiles();
+		userService.fetchLoyalUsers();
         //		SpringApplication.run(StoreApplication.class, args);
 //		var orderService = context.getBean(OrderService.class);
 //		orderService.placeOrder();
