@@ -2,10 +2,13 @@ package com.example.store.services;
 
 import com.example.store.entities.Address;
 import com.example.store.entities.Category;
+import com.example.store.entities.Product;
 import com.example.store.entities.User;
 import com.example.store.repositories.*;
+import com.example.store.repositories.specifications.ProductSpec;
 import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -147,5 +150,25 @@ public class UserService {
     public void fetchLoyalUsers(){
         var users = userRepository.findLoyalUsers(2);
         users.forEach(u -> {System.out.println(u.getEmail());});
+    }
+
+    public void fetchProductsBySpecification(String name, BigDecimal minPrice, BigDecimal maxPrice){
+//        Specification<Product> spec = Specification.where(null); // this doesn't work in this version of spring boot and spring data jpa because of some changes in the way specifications are handled in the newer versions, so we can use the below version instead which is a specification that does not filter anything (it is like a where 1=1 in SQL) and we can use it as a starting point to build our specification by adding more conditions to it using the and() method of the Specification interface (e.g. spec = spec.and(ProductSpec.hasName(name)) to add a condition for filtering products by name using the hasName specification from the ProductSpec class) and then we can pass this specification to the repository method that accepts a specification (e.g. productRepository.findAll(spec)) to get the filtered products based on the specified conditions in the specification.
+        Specification<Product> spec = Specification.unrestricted(); // this is equivalent to the above version.
+//        Specification<Product> spec = (root, query, cb) -> cb.conjunction(); // the above version with null didn't work in this version of spring boot and spring data jpa because of some changes in the way specifications are handled in the newer versions, so we can use this version instead which is a specification that does not filter anything (it is like a where 1=1 in SQL) and we can use it as a starting point to build our specification by adding more conditions to it using the and() method of the Specification interface (e.g. spec = spec.and(ProductSpec.hasName(name)) to add a condition for filtering products by name using the hasName specification from the ProductSpec class) and then we can pass this specification to the repository method that accepts a specification (e.g. productRepository.findAll(spec)) to get the filtered products based on the specified conditions in the specification.
+
+        if (name != null) {
+            spec = spec.and(ProductSpec.hasName(name));
+        }
+        if (minPrice != null) {
+            spec = spec.and(ProductSpec.hasPriceGreaterThanOrEqualTo(minPrice));
+        }
+        if (maxPrice != null) {
+            spec = spec.and(ProductSpec.hasPriceLessThanOrEqualTo(maxPrice));
+        }
+
+        var products = productRepository.findAll(spec);
+        products.forEach(System.out::println);
+
     }
 }

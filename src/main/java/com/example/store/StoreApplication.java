@@ -9,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 @SpringBootApplication
@@ -49,7 +50,8 @@ public class StoreApplication {
 //		userService.fetchAllUsers();
 //		userService.fetchProductsByProcedure();
 //		userService.fetchProfiles();
-		userService.fetchLoyalUsers();
+//		userService.fetchLoyalUsers();
+		userService.fetchProductsBySpecification("prod", null, null);
         //		SpringApplication.run(StoreApplication.class, args);
 //		var orderService = context.getBean(OrderService.class);
 //		orderService.placeOrder();
