@@ -8,6 +8,9 @@ import com.example.store.repositories.*;
 import com.example.store.repositories.specifications.ProductSpec;
 import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -170,5 +173,28 @@ public class UserService {
         var products = productRepository.findAll(spec);
         products.forEach(System.out::println);
 
+    }
+
+    //
+    public void fetchSortedProducts(){
+//        var sort = Sort.by("name", "price"); // this will sort the products by name and then by price in ascending order (default) but if we want to sort by price in descending order we can use the and() method of the Sort class to combine multiple sorting criteria and specify the sorting direction for each criterion (e.g. Sort.by("name").and(Sort.by("price").descending()) to sort by name in ascending order and then by price in descending order)
+        var sort = Sort.by("name").and(
+                Sort.by("price").descending()
+        );
+        // we pass the sort object to the repository method that accepts a sort parameter (productRepository.findAll(sort)) to get the sorted products based on the specified sorting criteria in the sort object.
+        productRepository.findAll(sort).forEach(System.out::println);
+    }
+    // this method demonstrates how to fetch products in a paginated way using the PageRequest class to specify the page number and page size and then passing the PageRequest object to the repository method that accepts a pageable parameter (productRepository.findAll(pageRequest)) to get a Page object that contains the products for the specified page and also information about the total number of pages and total number of elements (products) in the database.
+    public void fetchPaginatedProducts(int pageNumber, int size){ // pageNumber starts from 0, size is the number of items per page
+        PageRequest pageRequest = PageRequest.of(pageNumber, size);
+        Page<Product> page = productRepository.findAll(pageRequest);
+
+        var products = page.getContent(); // get the list of products in the current page
+        products.forEach(System.out::println);
+
+        var totalPages = page.getTotalPages(); // get the total number of pages
+        var totalElements = page.getTotalElements(); // get the total number of products
+        System.out.println("Total Pages: " + totalPages);
+        System.out.println("Total Elements: " + totalElements);
     }
 }

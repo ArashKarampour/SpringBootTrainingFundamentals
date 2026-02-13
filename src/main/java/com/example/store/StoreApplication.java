@@ -51,7 +51,9 @@ public class StoreApplication {
 //		userService.fetchProductsByProcedure();
 //		userService.fetchProfiles();
 //		userService.fetchLoyalUsers();
-		userService.fetchProductsBySpecification("prod", null, null);
+//		userService.fetchProductsBySpecification("prod", null, null);
+//		userService.fetchSortedProducts();
+		userService.fetchPaginatedProducts(0,5);
         //		SpringApplication.run(StoreApplication.class, args);
 //		var orderService = context.getBean(OrderService.class);
 //		orderService.placeOrder();
