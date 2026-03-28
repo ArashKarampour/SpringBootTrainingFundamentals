@@ -80,7 +80,7 @@
 				<configuration>
 					<url>jdbc:mysql://localhost:3306/storedb?createDatabaseIfNotExist=true</url>
 					<user>root</user>
-					<password>16azar1377</password>
+					<password>Password</password>
 				</configuration>
 			</plugin>
 		</plugins>
